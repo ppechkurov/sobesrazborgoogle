@@ -27,7 +27,7 @@
             # The Nix packages provided in the environment
             packages = [
               go-task
-              go_1_25
+              go_1_27
               gofumpt
               golangci-lint
               golangci-lint-langserver
