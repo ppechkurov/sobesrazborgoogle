@@ -1,25 +1,64 @@
 package channels
 
 import (
+	"context"
 	"fmt"
+	"sync"
 	"time"
 )
 
-func worker(done chan<- struct{}) {
-	fmt.Println("woring...")
-	time.Sleep(time.Second)
-	fmt.Println("done!")
+func Run(ctx context.Context) error {
+	var wg sync.WaitGroup
+	first := make(chan string, 1)
+	second := make(chan string, 1)
 
-	done <- struct{}{}
-}
+	wg.Go(func() {
+		defer close(first)
 
-func Run() error {
-	done := make(chan struct{}, 1)
-	defer close(done)
+		for i := range 10 {
+			select {
+			case <-ctx.Done():
+				fmt.Println("first cancelled...")
+				return
+			case first <- fmt.Sprintf("%d: first", i):
+				time.Sleep(time.Second)
+			}
+		}
+	})
 
-	go worker(done)
+	wg.Go(func() {
+		defer close(second)
 
-	<-done
+		for i := range 10 {
+			select {
+			case <-ctx.Done():
+				fmt.Println("second cancelled...")
+				return
+			case second <- fmt.Sprintf("%d: second", i):
+				time.Sleep(time.Second)
+			}
+		}
+	})
 
-	return nil
+	for _, ch := range []chan string{first, second} {
+		ch := ch
+		wg.Go(func() {
+			for {
+				select {
+				case <-ctx.Done():
+					fmt.Println("ctx cancelled")
+					return
+				case msg, more := <-ch:
+					if !more {
+						return
+					}
+					fmt.Println(msg)
+				}
+			}
+		})
+	}
+
+	wg.Wait()
+
+	return ctx.Err()
 }
