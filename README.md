@@ -4643,11 +4643,11 @@ func TestContextCancel(t *testing.T) {
 - [x] Устройство слайса, рост `cap`, ловушки общего массива, `a[i:j:k]`
 - [x] Устройство map (Swiss Tables с 1.24), почему нельзя `&m[k]`, конкурентный доступ
 - [x] Строки: байты vs руны, UTF-8, `strings.Builder`
-- [ ] Интерфейсы: `iface`/`eface`, nil-интерфейс, method sets
-- [ ] Встраивание vs наследование
-- [ ] `defer`: порядок, аргументы, именованные результаты
-- [ ] Ошибки: `%w`, `errors.Is/As/AsType/Join`
-- [ ] `panic`/`recover`, что нельзя поймать
+- [x] Интерфейсы: `iface`/`eface`, nil-интерфейс, method sets
+- [x] Встраивание vs наследование
+- [x] `defer`: порядок, аргументы, именованные результаты
+- [x] Ошибки: `%w`, `errors.Is/As/AsType/Join`
+- [x] `panic`/`recover`, что нельзя поймать
 - [ ] Дженерики: constraints, `~`, реализация (GC shape), generic-методы (1.27)
 - [ ] Итераторы `iter.Seq`, range-over-func
 
