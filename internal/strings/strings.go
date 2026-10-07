@@ -1,0 +1,3 @@
+package strings
+
+func Run() {}

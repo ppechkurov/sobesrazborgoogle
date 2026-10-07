@@ -4642,7 +4642,7 @@ func TestContextCancel(t *testing.T) {
 - [x] Zero values, `new` vs `make`, `new(expr)` (1.26)
 - [x] Устройство слайса, рост `cap`, ловушки общего массива, `a[i:j:k]`
 - [x] Устройство map (Swiss Tables с 1.24), почему нельзя `&m[k]`, конкурентный доступ
-- [ ] Строки: байты vs руны, UTF-8, `strings.Builder`
+- [x] Строки: байты vs руны, UTF-8, `strings.Builder`
 - [ ] Интерфейсы: `iface`/`eface`, nil-интерфейс, method sets
 - [ ] Встраивание vs наследование
 - [ ] `defer`: порядок, аргументы, именованные результаты
