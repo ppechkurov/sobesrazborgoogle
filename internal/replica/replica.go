@@ -19,13 +19,23 @@ func Query(
 	}
 
 	ch := make(chan res, len(urls))
+	sem := make(chan struct{}, 10)
 
-	for _, url := range urls {
-		go func() {
-			msg, err := call(ctx, url, "some query?")
-			ch <- res{msg: msg, err: err}
-		}()
-	}
+	go func() {
+		for _, url := range urls {
+			select {
+			case <-ctx.Done():
+				return
+
+			case sem <- struct{}{}:
+				go func() {
+					defer func() { <-sem }()
+					msg, err := call(ctx, url, "some query?")
+					ch <- res{msg: msg, err: err}
+				}()
+			}
+		}
+	}()
 
 	errs := make([]error, 0, len(urls))
 	for range len(urls) {
