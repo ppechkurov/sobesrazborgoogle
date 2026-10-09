@@ -30,6 +30,7 @@ func Query(
 			case sem <- struct{}{}:
 				go func() {
 					defer func() { <-sem }()
+
 					msg, err := call(ctx, url, "some query?")
 					ch <- res{msg: msg, err: err}
 				}()
