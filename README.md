@@ -4648,13 +4648,13 @@ func TestContextCancel(t *testing.T) {
 - [x] `defer`: порядок, аргументы, именованные результаты
 - [x] Ошибки: `%w`, `errors.Is/As/AsType/Join`
 - [x] `panic`/`recover`, что нельзя поймать
-- [ ] Дженерики: constraints, `~`, реализация (GC shape), generic-методы (1.27)
+- [x] Дженерики: constraints, `~`, реализация (GC shape), generic-методы (1.27)
 - [ ] Итераторы `iter.Seq`, range-over-func
 
 ### Конкурентность
-- [ ] Горутина vs поток, модель G-M-P, work stealing, вытеснение
-- [ ] Каналы: таблица поведения nil/закрытый/открытый
-- [ ] `select`, nil-каналы, `default`
+- [x] Горутина vs поток, модель G-M-P, work stealing, вытеснение
+- [x] Каналы: таблица поведения nil/закрытый/открытый
+- [x] `select`, nil-каналы, `default`
 - [ ] Mutex (normal/starvation), RWMutex, Once, Cond, Pool, atomic
 - [ ] Memory model, happens-before, data race vs race condition
 - [ ] `context`: все конструкторы, `WithCancelCause`, `WithoutCancel`
