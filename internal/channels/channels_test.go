@@ -26,7 +26,7 @@ func TestMerge(t *testing.T) {
 		timer := time.NewTimer(time.Millisecond)
 		defer timer.Stop()
 
-		out := channels.Merge(chans...)
+		out := channels.Merge(t.Context(), chans...)
 		got, want := 0, 0+1+2+3+4+5+6+7+8+9
 
 	lp:

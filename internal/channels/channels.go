@@ -62,14 +62,18 @@ func Run(ctx context.Context) error {
 	return ctx.Err()
 }
 
-func Merge[T comparable](chans ...<-chan T) <-chan T {
+func Merge[T comparable](ctx context.Context, chans ...<-chan T) <-chan T {
 	var wg sync.WaitGroup
 	out := make(chan T)
 
 	for _, ch := range chans {
 		wg.Go(func() {
-			for i := range ch {
-				out <- i
+			for v := range ch {
+				select {
+				case out <- v:
+				case <-ctx.Done():
+					return
+				}
 			}
 		})
 	}
