@@ -41,7 +41,6 @@ func Run(ctx context.Context) error {
 	})
 
 	for _, ch := range []chan string{first, second} {
-		ch := ch
 		wg.Go(func() {
 			for {
 				select {
@@ -61,4 +60,24 @@ func Run(ctx context.Context) error {
 	wg.Wait()
 
 	return ctx.Err()
+}
+
+func Merge[T comparable](chans ...<-chan T) <-chan T {
+	var wg sync.WaitGroup
+	out := make(chan T)
+
+	for _, ch := range chans {
+		wg.Go(func() {
+			for i := range ch {
+				out <- i
+			}
+		})
+	}
+
+	go func() {
+		wg.Wait()
+		close(out)
+	}()
+
+	return out
 }
