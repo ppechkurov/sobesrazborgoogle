@@ -41,7 +41,7 @@ func TestGet(t *testing.T) {
 
 	t.Run("returns (zero,false) when key is expired", func(t *testing.T) {
 		c = cache.New(
-			cache.WithTTL[string, string](1),
+			cache.WithTTL[string, string](time.Millisecond),
 		)
 		t.Parallel()
 		c.Put("test_key", "test_val")
